@@ -1,31 +1,9 @@
 import torch
 import torch.nn as nn
-import copy
 
 
 __all__ = ['IMTL']
 
-
-'''
-input: list of raw losses
-for each raw loss:
-    L_t = 1*e**(s_t)*L_t^{raw} - s_t
-    multiply the scaled task-sepcific losses by the gradient of the shared features - MSE/CEB???
-    - g_t
-    compute the unit-norm of the previous step
-Next:
-compute gradient differences between task 1 and all the others using g_t from above - D
-compute the unit-norm gradient differences using unit-norm values from above - U
-compute scaling factors for tasks 2 to T - alpha_{2:T} = g1*U.T * inv(D*U.T)
-compute scaling factors for all tasks alpha = [1-ones.matmul(alpha_{2:T}.T), alpha_{2:T}]
-update task-shared parameters - backward pass
-for tasks 1 to T:
-    update task-specific parameters - backward pass
-    update loss scale parameters s_t
-    
-s_t are learnable parameters - need to be added to the optimizer!
-    
-'''
 
 class IMTL(nn.Module):
     def __init__(self, method='hybrid'):
