@@ -6,6 +6,8 @@ Liyang Liu, Yi Li, Zhanghui Kuang, Jing-Hao Xue, Yimin Chen, Wenming Yang, Qingm
 
 OpenReview: https://openreview.net/forum?id=IMPnRXEWpvr
 
+Source code written by: Ing. John T LaMaster
+
 
 # Implementation
 1. Instantiate the module and send to the GPU. As described in the paper, the possible methods are 'gradient', 'loss', and 'hybrid'.
