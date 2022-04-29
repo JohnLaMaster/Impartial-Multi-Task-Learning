@@ -1,4 +1,4 @@
-# Impartial_Multi-Task_Learning
+# Impartial Multi-Task Learning
 PyTorch implementation of "Towards Impartial Multi-Task Learning"
 
 "Towards Impartial Multi-task Learning". 
