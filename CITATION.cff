@@ -1,0 +1,10 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: LaMaster
+    given-names: John
+    orcid: https://orcid.org/0000-0002-2149-771X
+title: "PyTorch Implementation of 'Towards Impartial Multi-Task Learning'"
+version: 1.0.0
+doi: 10.5281/zenodo.6794042
+date-released: 2022-04-29
