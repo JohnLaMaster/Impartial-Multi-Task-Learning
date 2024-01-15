@@ -6,32 +6,31 @@ __all__ = ['IMTL']
 
 
 class IMTL(nn.Module):
-    def __init__(self, method='hybrid'):
+    def __init__(self, method: str='hybrid', num_losses: int=1):
         super().__init__()
         self.method = method
-        self.s_t = False
+        self.first = True
         self.num_losses = -1
         self.ind = []
         self.register_buffer('e', torch.exp(torch.ones([1])))
+        self.register_parameter('s_t', torch.ones(num_losses+1).squeeze())
         
     def instantiate(self, 
                     device,
                     losses: list[torch.Tensor, ...]):
-        del self.s_t
         self.device = data.device
         for i, loss in enumerate(losses):
             self.ind.append(-1)
             if loss.requires_grad: 
                 self.num_losses += 1
                 self.ind[-1] = self.num_losses
-                
-        self.register_parameter('s_t', nn.Parameter(torch.ones(self.num_losses+1).squeeze(), requires_grad=True))
+        self.first = False
         
     def forward(self, 
                 data: torch.Tensor,
                 losses: list[torch.Tensor, ...],
                ) -> tuple([torch.Tensor,...]):
-        if isinstance(self.s_t, bool): self.instantiate(data.device, losses)
+        if isinstance(self.first, True): self.instantiate(data.device, losses)
             
         # >>> Loss Balance
         L_t = torch.empty(self.s_t.numel(), device=self.device)
