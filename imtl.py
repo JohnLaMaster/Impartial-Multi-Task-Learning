@@ -65,3 +65,14 @@ class IMTL(nn.Module):
             return [self.s_t]
         return []
     
+    def backward(self, 
+                 shared_parameters,
+                 losses: list[torch.Tensor, ...],
+                ) -> tuple[torch.Tensor, torch.Tensor]:
+        grads, losses = self.foward(shared_parameters, losses)
+        if 'gradient' in self.method:
+            return grads.backward(), None
+        elif 'loss' in self.method:
+            return None, [l.backward() for l in losses]
+        return grads.backward(), [l.backward() for l in losses]
+        
